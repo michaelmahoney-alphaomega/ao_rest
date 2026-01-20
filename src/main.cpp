@@ -5,8 +5,8 @@
 using namespace std;
 
 int main(std::string api_call){
-    string serverConfigFile = "server_config.json";
-    vector<string> serverConfig = load_server_config(serverConfigFile);
+    string serverConfigPath= "server_config.json";
+    vector<string> serverConfig = load_server_config(serverConfigPath);
     int error = http_server(api_call, serverConfig);
     return  error;
 }
