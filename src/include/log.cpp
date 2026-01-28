@@ -12,7 +12,7 @@ class Logger {
     int info_count = 0;
     int warning_count = 0;
     int error_count = 0;
-    // vector<string> data;
+    vector<string> data;
     
     public:
         Logger(
@@ -20,10 +20,7 @@ class Logger {
             const int log_level,
             const int rollover_size,
             const bool send_to_cout,
-            vector<string> data = {}
-            
-
-
+            vector<string> supplied_data = {}
         ){
             if (!LogFile.is_open()){
 
@@ -41,9 +38,18 @@ class Logger {
             }
             
             else {
-                
-                LogFile.open(file_path, ios::app);
+                for (const string& log_line : supplied_data) {
+                    const string errorLiteral = "ERROR";
+                    const string warningLiteral = "WARNING";
+                    const string infoLiteral = "INFO";
+                    const string debugLiteral = "DEBUG";
 
+                    if (log_line.find(errorLiteral)) {
+                       error_count++; 
+                    }
+                    data.push_back(log_line);
+                }
+                LogFile.open(file_path, ios::app);
             }
         }
 
