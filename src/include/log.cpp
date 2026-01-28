@@ -6,12 +6,30 @@
 
 using namespace std;
 
+enum LogMessageType {
+    FATAL,
+    ERROR,
+    WARNING,
+    INFO,
+    DEBUG,
+    UNKNOWN
+};
+
+enum LogLevel {
+    ERROR,
+    WARNING,
+    INFO,
+    DEBUG
+};
+
 class Logger {
     ofstream LogFile;
+    LogLevel log_level;
     int debug_count = 0;
     int info_count = 0;
     int warning_count = 0;
     int error_count = 0;
+    int unknown_count = 0;
     vector<string> data;
     
     public:
@@ -47,8 +65,22 @@ class Logger {
                     if (log_line.find(errorLiteral)) {
                        error_count++; 
                     }
+                    else if (log_line.find(warningLiteral)){
+                       warning_count++; 
+                    }
+                    else if (log_line.find(infoLiteral)){
+                       info_count++;
+                    }
+                    else if (log_line.find(debugLiteral)){
+                       debug_count++;
+                    }
+                    else {
+                    unknown_count++;
+                    }
+                    
                     data.push_back(log_line);
                 }
+
                 LogFile.open(file_path, ios::app);
             }
         }
@@ -56,5 +88,40 @@ class Logger {
         ~Logger(){
             if (LogFile.is_open()) {LogFile.close();}
         }
+
+        int& log_error() {
+            return error_count;
+        }
+        int& log_warning() {
+            return warning_count;
+        }
+        int& log_info() {
+            return info_count;
+        }
+        int& log_debug() {
+            return debug_count;
+        }
+        int& log_unknown() {
+            return unknown_count;
+        }
     
-}
+    private:
+        void log(string log_message, LogMessageType messageType) {
+            time_t now = time(nullptr);
+            tm* localTime = localtime(&now);
+            char localTimeBuffer[20];
+            const size_t dateLength = strftime(localTimeBuffer, sizeof(localTimeBuffer), "%Y-%m-%d %H:%M:%S", localTime);
+
+            if (dateLength == 0) {
+                cerr << "ERROR: Logger.Logger() failed to create a formatted timestamp. Please check the Logger class constructor function." << endl;
+            }
+            
+            else {
+                if (messageType == LogMessageType::ERROR){
+                    const string logMessage = localTimeBuffer + string("ERROR") + log_message;
+                }
+            }
+
+        }
+    
+};
