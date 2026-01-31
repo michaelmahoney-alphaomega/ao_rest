@@ -106,10 +106,16 @@ class Logger {
         }
     
     private:
-        void log(string log_message, LogMessageType messageType) {
+        void log(
+            string log_message, 
+            LogMessageType messageType,
+            const char* file_name,
+            const char* function_name,
+            const int line
+        ) {
             time_t now = time(nullptr);
             tm* localTime = localtime(&now);
-            char localTimeBuffer[20];
+            char localTimeBuffer[32];
             const size_t dateLength = strftime(localTimeBuffer, sizeof(localTimeBuffer), "%Y-%m-%d %H:%M:%S", localTime);
 
             if (dateLength == 0) {
@@ -118,7 +124,10 @@ class Logger {
             
             else {
                 if (messageType == LogMessageType::ERROR){
-                    const string logMessage = localTimeBuffer + string("ERROR") + log_message;
+                    string strLine = to_string(line);
+                    const string prefix = string(" ERROR: ") + file_name + " " + function_name + " " + strLine + " ";
+                    const string logMessage = localTimeBuffer + prefix + log_message;
+                    LogFile << logMessage << endl;
                 }
             }
 
