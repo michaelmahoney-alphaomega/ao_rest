@@ -60,52 +60,46 @@ Logger::Logger(
     }
 }
 
-        ~Logger(){
-            if (LogFile.is_open()) {LogFile.close();}
-        }
+Logger::~Logger(){
+    if (LogFile.is_open()) {LogFile.close();}
+}
 
-        int& log_error() {
-            return error_count;
-        }
-        int& log_warning() {
-            return warning_count;
-        }
-        int& log_info() {
-            return info_count;
-        }
-        int& log_debug() {
-            return debug_count;
-        }
-        int& log_unknown() {
-            return unknown_count;
-        }
+atomic<int>& Logger::log_error(string message) {
+    return error_count;
+}
+
+atomic<int>& Logger::log_warning(string message) {
+    return warning_count;
+}
+
+atomic<int>& Logger::log_info(string message) {
+    return info_count;
+}
+
+atomic<int>& Logger::log_debug(string message) {
+    return debug_count;
+}
     
-    private:
-        void log(
-            string log_message, 
-            LogMessageType messageType,
-            const char* file_name,
-            const char* function_name,
-            const int line
-        ) {
-            time_t now = time(nullptr);
-            tm* localTime = localtime(&now);
-            char localTimeBuffer[32];
-            const size_t dateLength = strftime(localTimeBuffer, sizeof(localTimeBuffer), "%Y-%m-%d %H:%M:%S", localTime);
+void Logger::log(
+    string log_message, 
+    LogMessageType messageType,
+    const char* file_name,
+    const char* function_name,
+    const int line
+) {
+    time_t now= time(nullptr);
+    tm* localTime = localtime(&now);
+    char localTimeBuffer[32];
+    const size_t dateLength = strftime(localTimeBuffer, sizeof(localTimeBuffer), "%Y-%m-%d %H:%M:%S", localTime);
 
-            if (dateLength == 0) {
-                cerr << "ERROR: Logger.Logger() failed to create a formatted timestamp. Please check the Logger class constructor function." << endl;
-            }
-            
-            else {
-                if (messageType == LogMessageType::ERROR){
-                    string strLine = to_string(line);
-                    const string prefix = string(" ERROR: ") + file_name + " " + function_name + " " + strLine + " ";
-                    const string logMessage = localTimeBuffer + prefix + log_message;
-                    LogFile << logMessage << endl;
-                }
-            }
-
-        }
+    string messageTypeString;
     
-};
+    if (messageType == LogMessageType::ERROR){
+        messageTypeString = string(" ERROR: ");
+        string strLine = to_string(line);
+        const string prefix = string(" ERROR: ") + file_name + " " + function_name + " " + strLine + " ";
+        const string logMessage = localTimeBuffer + prefix + log_message;
+        LogFile << logMessage << endl;
+    }
+
+}

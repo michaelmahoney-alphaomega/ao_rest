@@ -32,7 +32,15 @@ class Logger {
         atomic<int> warning_count {0};
         atomic<int> error_count {0};
         vector<string> data {};
-    
+
+        void log(
+            string log_message, 
+            LogMessageType messageType,
+            const char* file_name,
+            const char* function_name,
+            const int line
+        );
+        
     public:
         Logger(
             const string file_path,
@@ -44,17 +52,17 @@ class Logger {
 
         ~Logger();
 
-        int& log_error(string message);
-        int& log_warning(string message);
-        int& log_info(string message);
-        int& log_debug(string message);
-        int& get_error_count() const noexcept;
-        int& get_warning_count() const noexcept;
-        int& get_info_count() const noexcept;
-        int& get_debug_count() const noexcept;
-        void flush();
-        void roll_over();
-        int roll_up(Logger logger);
+        atomic<int>& log_error(string message);
+        atomic<int>& log_warning(string message);
+        atomic<int>& log_info(string message);
+        atomic<int>& log_debug(string message);
+        atomic<int>& get_error_count() const noexcept;
+        atomic<int>& get_warning_count() const noexcept;
+        atomic<int>& get_info_count() const noexcept;
+        atomic<int>& get_debug_count() const noexcept;
+        atomic<int>& flush();
+        atomic<int>& roll_over();
+        atomic<int>& roll_up(Logger logger);
 
 
 };
