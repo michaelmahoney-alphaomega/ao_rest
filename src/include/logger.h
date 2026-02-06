@@ -25,6 +25,7 @@ enum LogLevel {
 class Logger {
     private:
         ofstream LogFile;
+        string log_file_name;
         mutex logFileMutex;
         LogLevel log_level;
         atomic<int> debug_count {0};
@@ -52,14 +53,14 @@ class Logger {
 
         ~Logger();
 
-        atomic<int>& log_error(string message);
-        atomic<int>& log_warning(string message);
-        atomic<int>& log_info(string message);
-        atomic<int>& log_debug(string message);
-        atomic<int>& get_error_count() const noexcept;
-        atomic<int>& get_warning_count() const noexcept;
-        atomic<int>& get_info_count() const noexcept;
-        atomic<int>& get_debug_count() const noexcept;
+        int log_error(string message, const char* file_name, const char* function_name, const int line);
+        int log_warning(string message, const char* file_name, const char* function_name, const int line);
+        int log_info(string message, const char* file_name, const char* function_name, const int line);
+        int log_debug(string message, const char* file_name, const char* function_name, const int line);
+        int get_error_count() const noexcept;
+        int get_warning_count() const noexcept;
+        int get_info_count() const noexcept;
+        int get_debug_count() const noexcept;
         atomic<int>& flush();
         atomic<int>& roll_over();
         atomic<int>& roll_up(Logger logger);

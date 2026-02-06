@@ -64,21 +64,6 @@ Logger::~Logger(){
     if (LogFile.is_open()) {LogFile.close();}
 }
 
-atomic<int>& Logger::log_error(string message) {
-    return error_count;
-}
-
-atomic<int>& Logger::log_warning(string message) {
-    return warning_count;
-}
-
-atomic<int>& Logger::log_info(string message) {
-    return info_count;
-}
-
-atomic<int>& Logger::log_debug(string message) {
-    return debug_count;
-}
     
 void Logger::log(
     string log_message, 
@@ -101,5 +86,83 @@ void Logger::log(
         const string logMessage = localTimeBuffer + prefix + log_message;
         LogFile << logMessage << endl;
     }
+    else if (messageType == LogMessageType::WARNING){
+        messageTypeString = string(" WARNING: ");
+        string strLine = to_string(line);
+        const string prefix = string(" WARNING: ") + file_name + " " + function_name + " " + strLine + " ";
+        const string logMessage = localTimeBuffer + prefix + log_message;
+        LogFile << logMessage << endl;
+    }
+    else if (messageType == LogMessageType::INFO){
+        messageTypeString = string(" INFO: ");
+        string strLine = to_string(line);
+        const string prefix = string(" INFO: ") + file_name + " " + function_name + " " + strLine + " ";
+        const string logMessage = localTimeBuffer + prefix + log_message;
+        LogFile << logMessage << endl;
+    }
+    else {
+        messageTypeString = string(" DEBUG: ");
+        string strLine = to_string(line);
+        const string prefix = string(" DEBUG: ") + file_name + " " + function_name + " " + strLine + " ";
+        const string logMessage = localTimeBuffer + prefix + log_message;
+        LogFile << logMessage << endl;
+    }
 
+}
+
+int Logger::get_error_count() const noexcept {
+    return Logger::error_count.load();
+}
+int Logger::get_warning_count() const noexcept {
+    return Logger::warning_count.load();
+}
+int Logger::get_info_count() const noexcept {
+    return Logger::info_count.load();
+}
+int Logger::get_debug_count() const noexcept {
+    return Logger::debug_count.load();
+}
+
+int Logger::log_error(
+    string message, 
+    const char* file_name, 
+    const char* function_name, 
+    const int line
+) {
+    Logger::log(message, LogMessageType::ERROR, file_name, function_name, line);
+    Logger::error_count ++;
+    return Logger::get_error_count();
+}
+
+int Logger::log_warning(
+    string message, 
+    const char* file_name, 
+    const char* function_name, 
+    const int line
+) {
+    Logger::log(message, LogMessageType::WARNING, file_name, function_name, line);
+    Logger::warning_count++;    
+    return Logger::get_warning_count();
+}
+
+int Logger::log_info(
+    string message, 
+    const char* file_name, 
+    const char* function_name, 
+    const int line
+) {
+    Logger::log(message, LogMessageType::INFO, file_name, function_name, line);
+    Logger::info_count++;    
+    return Logger::get_info_count();
+}
+
+int Logger::log_debug(
+    string message, 
+    const char* file_name, 
+    const char* function_name, 
+    const int line
+) {
+    Logger::log(message, LogMessageType::DEBUG, file_name, function_name, line);
+    Logger::debug_count++;    
+    return Logger::get_debug_count();
 }
