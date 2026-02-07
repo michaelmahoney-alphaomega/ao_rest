@@ -3,6 +3,7 @@
 #include <vector>
 #include <mutex>
 #include <atomic>
+#include <iostream>
 
 using namespace std;
 
@@ -16,10 +17,10 @@ enum LogMessageType {
 };
 
 enum LogLevel {
-    ERROR,
-    WARNING,
-    INFO,
-    DEBUG
+    error_messages,
+    warning_messages,
+    info_messages,
+    debug_messages
 };
 
 class Logger {

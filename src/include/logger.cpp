@@ -15,6 +15,8 @@ Logger::Logger(
     const bool send_to_cout,
     const vector<string>& supplied_data
 ){
+    ofstream LogFile(file_path);
+
     if (!LogFile.is_open()){
 
         time_t now = time(nullptr);
@@ -26,7 +28,7 @@ Logger::Logger(
             cerr << "ERROR: Logger.Logger() failed to create a formatted timestamp. Please check the Logger class constructor function." << endl;
         }
 
-        const string errorMessage = buffer + string("ERROR: Logger.Logger() failed to open the log file: ") + file_path + string("Please make sure the file exists and this server has unique access to this log file while running");
+        const string errorMessage = buffer + string(" ERROR: Logger.Logger() failed to open the log file: ") + file_path + string(". Please make sure the file exists and this server has permissions to write to it.");
         cerr << errorMessage << endl;
     }
     
@@ -37,19 +39,20 @@ Logger::Logger(
             const string infoLiteral = "INFO";
             const string debugLiteral = "DEBUG";
 
-            if (log_line.find(errorLiteral)) {
-               error_count++; 
+            if (log_line.find(errorLiteral) != string::npos) {
+                error_count++; 
             }
-            else if (log_line.find(warningLiteral)){
+            else if (log_line.find(warningLiteral ) != string::npos){
                warning_count++; 
             }
-            else if (log_line.find(infoLiteral)){
+            else if (log_line.find(infoLiteral) != string::npos){
                info_count++;
             }
-            else if (log_line.find(debugLiteral)){
+            else if (log_line.find(debugLiteral) != string::npos){
                debug_count++;
             }
             else {
+                cerr << "There was an invalid line in the supplied data. Line = " << log_line <<endl;
                 // do nothing if the string doesn't have any of the key words.
             }
             
