@@ -35,7 +35,7 @@ class Logger {
         atomic<int> error_count {0};
         vector<string> data {};
 
-        void log(
+        void _log(
             string log_message, 
             LogMessageType messageType,
             const char* file_name,
@@ -44,6 +44,7 @@ class Logger {
         );
         
     public:
+
         Logger(
             const string file_path,
             const int log_level = 2,
@@ -51,9 +52,11 @@ class Logger {
             const bool send_to_cout = true,
             const vector<string>& supplied_data = {}
         );
-
         ~Logger();
-
+        
+        vector<string> get_topN_lines(int index);
+        void log_fatal(string message, const char* file_name, const char* function_name, const int line);
+        void log_unknown(string message, const char* file_name, const char* function_name, const int line);
         int log_error(string message, const char* file_name, const char* function_name, const int line);
         int log_warning(string message, const char* file_name, const char* function_name, const int line);
         int log_info(string message, const char* file_name, const char* function_name, const int line);
@@ -62,7 +65,7 @@ class Logger {
         int get_warning_count() const noexcept;
         int get_info_count() const noexcept;
         int get_debug_count() const noexcept;
-        atomic<int>& flush();
+        int flush();
         atomic<int>& roll_over();
         atomic<int>& roll_up(Logger logger);
 

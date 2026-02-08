@@ -15,7 +15,7 @@ Logger::Logger(
     const bool send_to_cout,
     const vector<string>& supplied_data
 ){
-    ofstream LogFile(file_path);
+    LogFile.open(file_path, ios::app);
 
     if (!LogFile.is_open()){
 
@@ -55,20 +55,16 @@ Logger::Logger(
                 cerr << "There was an invalid line in the supplied data. Line = " << log_line <<endl;
                 // do nothing if the string doesn't have any of the key words.
             }
-            
             data.push_back(log_line);
         }
-
-        LogFile.open(file_path, ios::app);
     }
 }
 
 Logger::~Logger(){
     if (LogFile.is_open()) {LogFile.close();}
 }
-
     
-void Logger::log(
+void Logger::_log(
     string log_message, 
     LogMessageType messageType,
     const char* file_name,
@@ -80,37 +76,38 @@ void Logger::log(
     char localTimeBuffer[32];
     const size_t dateLength = strftime(localTimeBuffer, sizeof(localTimeBuffer), "%Y-%m-%d %H:%M:%S", localTime);
 
+    string logMessage;
     string messageTypeString;
+    const string strLine = to_string(line);
+    const string prefix = file_name + string(" ") + function_name + " " + strLine + " ";
     
     if (messageType == LogMessageType::ERROR){
         messageTypeString = string(" ERROR: ");
-        string strLine = to_string(line);
-        const string prefix = string(" ERROR: ") + file_name + " " + function_name + " " + strLine + " ";
-        const string logMessage = localTimeBuffer + prefix + log_message;
-        LogFile << logMessage << endl;
-    }
-    else if (messageType == LogMessageType::WARNING){
-        messageTypeString = string(" WARNING: ");
-        string strLine = to_string(line);
-        const string prefix = string(" WARNING: ") + file_name + " " + function_name + " " + strLine + " ";
-        const string logMessage = localTimeBuffer + prefix + log_message;
-        LogFile << logMessage << endl;
-    }
-    else if (messageType == LogMessageType::INFO){
-        messageTypeString = string(" INFO: ");
-        string strLine = to_string(line);
-        const string prefix = string(" INFO: ") + file_name + " " + function_name + " " + strLine + " ";
-        const string logMessage = localTimeBuffer + prefix + log_message;
-        LogFile << logMessage << endl;
-    }
-    else {
-        messageTypeString = string(" DEBUG: ");
-        string strLine = to_string(line);
-        const string prefix = string(" DEBUG: ") + file_name + " " + function_name + " " + strLine + " ";
-        const string logMessage = localTimeBuffer + prefix + log_message;
-        LogFile << logMessage << endl;
     }
 
+    else if (messageType == LogMessageType::WARNING){
+        messageTypeString = string(" WARNING: ");
+    }
+
+    else if (messageType == LogMessageType::INFO){
+        messageTypeString = string(" INFO: ");
+    }
+
+    else if (messageType == LogMessageType::DEBUG) {
+        messageTypeString = string(" DEBUG: ");
+    }
+
+    else if (messageType == LogMessageType::FATAL) {
+        messageTypeString = string(" FATAL: ");
+    }
+    
+    else {
+        messageTypeString = string(" UNKNOWN: ");
+    }
+
+    logMessage = localTimeBuffer + messageTypeString + prefix + log_message;
+    Logger::data.push_back(logMessage);
+    LogFile << logMessage << endl;
 }
 
 int Logger::get_error_count() const noexcept {
@@ -123,7 +120,28 @@ int Logger::get_info_count() const noexcept {
     return Logger::info_count.load();
 }
 int Logger::get_debug_count() const noexcept {
-    return Logger::debug_count.load();
+    return debug_count.load();
+}
+
+vector<string> Logger::get_topN_lines(int topN) {
+    vector<string> dataSegment;
+    if (topN <= -1) {
+        dataSegment = data;
+    }
+    else {
+        size_t dataLength = Logger::data.size();
+        int maxIndex = dataLength - 1;
+        if (topN > maxIndex) {
+            topN = maxIndex;
+        }
+
+        int startingIndex = maxIndex - topN;
+
+        for (int i = startingIndex; i <= maxIndex; i++) {
+            dataSegment.push_back(data.at(i));
+        }
+    }
+    return dataSegment;
 }
 
 int Logger::log_error(
@@ -132,7 +150,7 @@ int Logger::log_error(
     const char* function_name, 
     const int line
 ) {
-    Logger::log(message, LogMessageType::ERROR, file_name, function_name, line);
+    Logger::_log(message, LogMessageType::ERROR, file_name, function_name, line);
     Logger::error_count ++;
     return Logger::get_error_count();
 }
@@ -143,7 +161,7 @@ int Logger::log_warning(
     const char* function_name, 
     const int line
 ) {
-    Logger::log(message, LogMessageType::WARNING, file_name, function_name, line);
+    Logger::_log(message, LogMessageType::WARNING, file_name, function_name, line);
     Logger::warning_count++;    
     return Logger::get_warning_count();
 }
@@ -154,7 +172,7 @@ int Logger::log_info(
     const char* function_name, 
     const int line
 ) {
-    Logger::log(message, LogMessageType::INFO, file_name, function_name, line);
+    Logger::_log(message, LogMessageType::INFO, file_name, function_name, line);
     Logger::info_count++;    
     return Logger::get_info_count();
 }
@@ -165,7 +183,39 @@ int Logger::log_debug(
     const char* function_name, 
     const int line
 ) {
-    Logger::log(message, LogMessageType::DEBUG, file_name, function_name, line);
+    Logger::_log(message, LogMessageType::DEBUG, file_name, function_name, line);
     Logger::debug_count++;    
     return Logger::get_debug_count();
+}
+
+void Logger::log_fatal(
+    string message,
+    const char *file_name,
+    const char *function_name,
+    const int line)
+{
+    Logger::_log(message, LogMessageType::FATAL, file_name, function_name, line);
+}
+
+void Logger::log_unknown(
+    string message, 
+    const char* file_name, 
+    const char* function_name, 
+    const int line
+) {
+    Logger::_log(message, LogMessageType::UNKNOWN, file_name, function_name, line);
+}
+
+int Logger::flush() {
+    vector<string>& dataRef = data;
+    int dataLength = dataRef.size();
+    
+    for (string& logLine : dataRef) {
+        LogFile << logLine << "\n";
+    }
+    dataRef.clear();
+    dataRef.shrink_to_fit();
+    LogFile.flush();
+
+    return dataLength;
 }

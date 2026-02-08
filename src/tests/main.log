@@ -1,0 +1,61 @@
+2026-02-07 22:13:59 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-07 22:13:59 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-07 22:14:34 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-07 22:14:34 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-07 22:14:36 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-07 22:14:36 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-07 22:14:36 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-07 22:14:36 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-07 22:14:37 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-07 22:14:37 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-07 22:14:37 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-07 22:14:37 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-07 22:14:37 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-07 22:14:37 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-07 22:14:38 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-07 22:14:38 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-07 22:17:30 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-07 22:17:39 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-07 22:18:55 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-07 22:18:55 WARNING: ./main.cpp main() 69 This is a test warning message
+2026-02-07 22:18:55 INFO: ./main.cpp main() 69 This is a test info message
+2026-02-07 22:18:55 DEBUG: ./main.cpp main() 69 This is a test debug message
+2026-02-07 22:36:18 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-07 22:36:18 WARNING: ./main.cpp main() 69 This is a test warning message
+2026-02-07 22:36:18 INFO: ./main.cpp main() 69 This is a test info message
+2026-02-07 22:36:18 DEBUG: ./main.cpp main() 69 This is a test debug message
+2026-02-07 22:38:03 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-07 22:38:03 WARNING: ./main.cpp main() 69 This is a test warning message
+2026-02-07 22:38:03 INFO: ./main.cpp main() 69 This is a test info message
+2026-02-07 22:38:03 DEBUG: ./main.cpp main() 69 This is a test debug message
+2026-02-07 22:38:03 FATAL: ./main.cpp main() 69 This is a test debug message
+2026-02-07 22:38:03 UNKNOWN: ./main.cpp main() 69 This is a test debug message
+2026-02-07 22:58:39 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-07 22:58:39 WARNING: ./main.cpp main() 69 This is a test warning message
+2026-02-07 22:58:39 INFO: ./main.cpp main() 69 This is a test info message
+2026-02-07 22:58:39 DEBUG: ./main.cpp main() 69 This is a test debug message
+2026-02-07 22:58:39 FATAL: ./main.cpp main() 69 This is a test debug message
+2026-02-07 22:58:39 UNKNOWN: ./main.cpp main() 69 This is a test debug message
+2026-02-07 22:59:00 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-07 22:59:00 WARNING: ./main.cpp main() 69 This is a test warning message
+2026-02-07 22:59:00 INFO: ./main.cpp main() 69 This is a test info message
+2026-02-07 22:59:00 DEBUG: ./main.cpp main() 69 This is a test debug message
+2026-02-07 22:59:00 FATAL: ./main.cpp main() 69 This is a test debug message
+2026-02-07 22:59:00 UNKNOWN: ./main.cpp main() 69 This is a test debug message
+123 ERROR: test test_func 0
+123 WARNING: test test_func 0
+123 WARNING: test test_func 0
+123 INFO: test test_func 0
+123 INFO: test test_func 0
+123 INFO: test test_func 0
+123 DEBUG: test test_func 0
+123 DEBUG: test test_func 0
+123 DEBUG: test test_func 0
+123 DEBUG: test test_func 0
+123 : test test_func 0
+2026-02-07 22:59:00 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-07 22:59:00 WARNING: ./main.cpp main() 69 This is a test warning message
+2026-02-07 22:59:00 INFO: ./main.cpp main() 69 This is a test info message
+2026-02-07 22:59:00 DEBUG: ./main.cpp main() 69 This is a test debug message
+2026-02-07 22:59:00 FATAL: ./main.cpp main() 69 This is a test debug message
+2026-02-07 22:59:00 UNKNOWN: ./main.cpp main() 69 This is a test debug message

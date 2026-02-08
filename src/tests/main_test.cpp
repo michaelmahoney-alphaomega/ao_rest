@@ -2,7 +2,7 @@
 #include <cassert>
 using namespace std;
 
-const string logFilePath = string("./main.log");
+const string logFilePath = string("main.log");
 const LogLevel logLevel = debug_messages;
 const int rolloverSize = 50000000;
 const bool sendToCOut = true;
@@ -44,6 +44,27 @@ int main() {
     assert(warningCount == 2);
     assert(infoCount == 3);
     assert(debugCount == 4);
+    
+    string errorMessage = string("This is a test error message");
+    string warningMessage = string("This is a test warning message");
+    string infoMessage = string("This is a test info message");
+    string debugMessage = string("This is a test debug message");
+    const char *fileName = "./main.cpp";
+    const char *funcName= "main()";
+    const int line = 69;
+
+
+    Log.log_error(errorMessage, fileName, funcName, line);
+    Log.log_warning(warningMessage, fileName, funcName, line);
+    Log.log_info(infoMessage, fileName, funcName, line);
+    Log.log_debug(debugMessage, fileName, funcName, line);
+    Log.log_fatal(debugMessage, fileName, funcName, line);
+    Log.log_unknown(debugMessage, fileName, funcName, line);
+    
+    Log.flush();
+    
+
+    return 0;
 
 
 }
