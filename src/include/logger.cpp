@@ -3,6 +3,8 @@
 #include <fstream>
 #include <string>
 #include <ctime>
+#include <thread>
+#include <chrono>
 
 #include "logger.h"
 
@@ -12,26 +14,29 @@ Logger::Logger(
     const string file_path,
     const int log_level,
     const int rollover_size,
-    const bool send_to_cout,
+    const bool sendToCOut,
     const vector<string>& supplied_data
 ){
     LogFile.open(file_path, ios::app);
+    send_to_cout = sendToCOut;
 
-    if (!LogFile.is_open()){
+    int failCounter = 0;
+    while (!LogFile.is_open()){
 
-        time_t now = time(nullptr);
-        tm* localTime = localtime(&now);
-        char buffer[25];
-        const size_t dateLength = strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", localTime);
-
-        if (dateLength == 0) {
-            cerr << "ERROR: Logger.Logger() failed to create a formatted timestamp. Please check the Logger class constructor function." << endl;
+        if (failCounter >= 5) {
+            break;
         }
 
-        const string errorMessage = buffer + string(" ERROR: Logger.Logger() failed to open the log file: ") + file_path + string(". Please make sure the file exists and this server has permissions to write to it.");
+        LogFile.close();
+        this_thread::sleep_for(chrono::seconds(1));
+        LogFile.open(file_path, ios::app);
+    }
+
+    if (!LogFile.is_open()) {
+        const string errorMessage = string("ERROR: Logger.Logger() failed to open the log file: ") + file_path + string(". Please make sure the file exists and this server has permissions to write to it.");
         cerr << errorMessage << endl;
     }
-    
+
     else {
         for (const string& log_line : supplied_data) {
             const string errorLiteral = "ERROR";
@@ -42,19 +47,24 @@ Logger::Logger(
             if (log_line.find(errorLiteral) != string::npos) {
                 error_count++; 
             }
+
             else if (log_line.find(warningLiteral ) != string::npos){
                warning_count++; 
             }
+
             else if (log_line.find(infoLiteral) != string::npos){
                info_count++;
             }
+
             else if (log_line.find(debugLiteral) != string::npos){
                debug_count++;
             }
+
             else {
                 cerr << "There was an invalid line in the supplied data. Line = " << log_line <<endl;
                 // do nothing if the string doesn't have any of the key words.
             }
+
             data.push_back(log_line);
         }
     }
@@ -107,6 +117,7 @@ void Logger::_log(
 
     logMessage = localTimeBuffer + messageTypeString + prefix + log_message;
     Logger::data.push_back(logMessage);
+    if (Logger::send_to_cout)
     LogFile << logMessage << endl;
 }
 

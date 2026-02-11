@@ -27,8 +27,9 @@ class Logger {
     private:
         ofstream LogFile;
         string log_file_name;
-        mutex logFileMutex;
+        mutex log_file_mutex;
         LogLevel log_level;
+        bool send_to_cout;
         atomic<int> debug_count {0};
         atomic<int> info_count {0};
         atomic<int> warning_count {0};
