@@ -1,13 +1,3 @@
-#include <iostream>
-#include <syncstream>
-#include <vector>
-#include <fstream>
-#include <string>
-#include <ctime>
-#include <thread>
-#include <chrono>
-// #include <mutex>
-
 #include "logger.h"
 
 using namespace std;
@@ -234,4 +224,8 @@ int Logger::flush() {
     LogFile.flush();
 
     return dataLength;
+}
+
+void Logger::roll_over() {
+    
 }
