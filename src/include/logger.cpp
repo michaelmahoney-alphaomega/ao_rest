@@ -1,5 +1,4 @@
 #include "logger.h"
-
 using namespace std;
     
 Logger::Logger(
@@ -53,7 +52,6 @@ Logger::Logger(
             }
 
             else {
-                
                 cerr << "There was an invalid line in the supplied data. Line = " << log_line <<endl;
                 // do nothing if the string doesn't have any of the key words.
             }
@@ -78,6 +76,7 @@ void Logger::_log(
     tm* localTime = localtime(&now);
     char localTimeBuffer[32];
     const size_t dateLength = strftime(localTimeBuffer, sizeof(localTimeBuffer), "%Y-%m-%d %H:%M:%S", localTime);
+    string localTimeString = string(localTimeBuffer);
 
     string logMessage;
     string messageTypeString;
@@ -108,7 +107,7 @@ void Logger::_log(
         messageTypeString = string(" UNKNOWN: ");
     }
 
-    logMessage = localTimeBuffer + messageTypeString + prefix + log_message;
+    logMessage = localTimeString + messageTypeString + prefix + log_message;
     lock_guard(data_mutex);
     Logger::data.push_back(logMessage);
 }
@@ -226,6 +225,40 @@ int Logger::flush() {
     return dataLength;
 }
 
-void Logger::roll_over() {
-    
+const string Logger::get_local_time() {
+    time_t now= time(nullptr);
+    tm* localTime = localtime(&now);
+    char localTimeBuffer[32];
+    const size_t dateLength = strftime(localTimeBuffer, sizeof(localTimeBuffer), "%Y-%m-%d %H:%M:%S", localTime);
+    const string localTimeString = string(localTimeBuffer);
+    return localTimeString;
+}
+
+
+void Logger::rollover() {
+    filesystem::path logFilePath(Logger::log_file_path);
+    filesystem::path logFileArchivePath(Logger::log_archive_folder);
+    const string localTimeString = Logger::get_local_time();
+    if (!filesystem::exists(logFilePath) || !filesystem::is_regular_file(logFilePath)) {
+        lock_guard(cerr_mutex);
+        cerr << Logger::get_local_time() + string(" ERROR: Logger::rollover() tried to read the size of -- ") + Logger::log_file_path + " -- and failed. This means the file either does not exist or is not a normal file type." << endl;
+    }
+    else {
+        uintmax_t logFileSize = filesystem::file_size(logFilePath);
+        if (logFileSize > Logger::log_file_rollover_size) {
+            
+            if (!filesystem::exists(logFileArchivePath) || !filesystem::is_directory(logFileArchivePath)) {
+                lock_guard(cerr_mutex);
+                cerr << Logger::get_local_time() + string(" ERROR: Logger::rollover() failed to copy the current log: ") + Logger::log_file_path + " to the archive folder: " + Logger::log_archive_folder + ", this means either the archive folder doesn't exist or isn't a directory." << endl;
+            }
+
+            bool copySuccess = filesystem::copy_file(logFilePath, logFileArchivePath);
+            
+            if (!copySuccess) {
+                lock_guard(cerr_mutex);
+                cerr << Logger::get_local_time() + string(" ERROR: Logger::rollover() failed to copy the currect log at ") + Logger::log_file_path + " to the archive path " + Logger::log_archive_folder + ". in this case the copy operation itself failed. Check that the file isn't locked by another process/application." << endl;
+            }
+
+        }
+    }
 }

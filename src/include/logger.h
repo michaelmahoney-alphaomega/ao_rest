@@ -31,12 +31,14 @@ enum LogLevel {
 class Logger {
     private:
         ofstream LogFile;
-        string log_file_name;
+        string log_file_path;
+        string log_archive_folder;
+        LogLevel log_level;
+        uintmax_t log_file_rollover_size;
         mutex data_mutex;
         mutex log_file_mutex;
         mutex cout_mutex;
         mutex cerr_mutex;
-        LogLevel log_level;
         bool send_to_cout;
         atomic<int> debug_count {0};
         atomic<int> info_count {0};
@@ -63,6 +65,7 @@ class Logger {
         );
         ~Logger();
         
+        const string get_local_time();
         vector<string> get_topN_lines(int index);
         void log_fatal(string message, const char* file_name, const char* function_name, const int line);
         void log_unknown(string message, const char* file_name, const char* function_name, const int line);
@@ -75,5 +78,5 @@ class Logger {
         int get_info_count() const noexcept;
         int get_debug_count() const noexcept;
         int flush();
-        void roll_over();
+        void rollover();
 };
