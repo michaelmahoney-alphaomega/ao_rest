@@ -1,10 +1,12 @@
 #include <iostream>
+#include <syncstream>
 #include <vector>
 #include <fstream>
 #include <string>
 #include <ctime>
 #include <thread>
 #include <chrono>
+// #include <mutex>
 
 #include "logger.h"
 
@@ -48,7 +50,7 @@ Logger::Logger(
                 error_count++; 
             }
 
-            else if (log_line.find(warningLiteral ) != string::npos){
+            else if (log_line.find(warningLiteral) != string::npos){
                warning_count++; 
             }
 
@@ -61,6 +63,7 @@ Logger::Logger(
             }
 
             else {
+                
                 cerr << "There was an invalid line in the supplied data. Line = " << log_line <<endl;
                 // do nothing if the string doesn't have any of the key words.
             }
@@ -116,9 +119,8 @@ void Logger::_log(
     }
 
     logMessage = localTimeBuffer + messageTypeString + prefix + log_message;
+    lock_guard(data_mutex);
     Logger::data.push_back(logMessage);
-    if (Logger::send_to_cout)
-    LogFile << logMessage << endl;
 }
 
 int Logger::get_error_count() const noexcept {
@@ -221,9 +223,12 @@ int Logger::flush() {
     vector<string>& dataRef = data;
     int dataLength = dataRef.size();
     
+    lock_guard(log_file_mutex);
     for (string& logLine : dataRef) {
         LogFile << logLine << "\n";
     }
+
+    lock_guard(data_mutex);
     dataRef.clear();
     dataRef.shrink_to_fit();
     LogFile.flush();

@@ -27,7 +27,10 @@ class Logger {
     private:
         ofstream LogFile;
         string log_file_name;
+        mutex data_mutex;
         mutex log_file_mutex;
+        mutex cout_mutex;
+        mutex cerr_mutex;
         LogLevel log_level;
         bool send_to_cout;
         atomic<int> debug_count {0};
@@ -67,8 +70,5 @@ class Logger {
         int get_info_count() const noexcept;
         int get_debug_count() const noexcept;
         int flush();
-        atomic<int>& roll_over();
-        atomic<int>& roll_up(Logger logger);
-
-
+        void roll_over();
 };
