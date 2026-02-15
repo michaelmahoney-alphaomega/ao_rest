@@ -3,6 +3,7 @@
 using namespace std;
 
 const string logFilePath = string("main.log");
+const string logArchivePath = string("logs/");
 const LogLevel logLevel = debug_messages;
 const int rolloverSize = 50;
 const bool sendToCOut = true;
@@ -25,6 +26,7 @@ const vector<string>& suppliedData = incommingData;
 int main() {
     Logger Log = Logger(
         logFilePath,
+        logArchivePath,
         logLevel,
         rolloverSize,
         sendToCOut,
