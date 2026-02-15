@@ -237,8 +237,10 @@ const string Logger::get_local_time() {
 
 void Logger::rollover() {
     filesystem::path logFilePath(Logger::log_file_path);
-    filesystem::path logFileArchivePath(Logger::log_archive_folder);
-    const string localTimeString = Logger::get_local_time();
+    string timeStamp = Logger::get_local_time();
+    string logArchiveName = Logger::log_archive_folder + Logger::log_file_path + timeStamp;
+    filesystem::path logFileArchivePath(logArchiveName);
+
     if (!filesystem::exists(logFilePath) || !filesystem::is_regular_file(logFilePath)) {
         lock_guard(cerr_mutex);
         cerr << Logger::get_local_time() + string(" ERROR: Logger::rollover() tried to read the size of -- ") + Logger::log_file_path + " -- and failed. This means the file either does not exist or is not a normal file type." << endl;
@@ -250,6 +252,10 @@ void Logger::rollover() {
             if (!filesystem::exists(logFileArchivePath) || !filesystem::is_directory(logFileArchivePath)) {
                 lock_guard(cerr_mutex);
                 cerr << Logger::get_local_time() + string(" ERROR: Logger::rollover() failed to copy the current log: ") + Logger::log_file_path + " to the archive folder: " + Logger::log_archive_folder + ", this means either the archive folder doesn't exist or isn't a directory." << endl;
+                
+                lock_guard(log_file_mutex);
+                Logger::LogFile << Logger::get_local_time() + string(" ERROR: Logger::rollover() failed to copy the current log: ") + Logger::log_file_path + " to the archive folder: " + Logger::log_archive_folder + ", this means either the archive folder doesn't exist or isn't a directory." << endl;
+                
             }
 
             bool copySuccess = filesystem::copy_file(logFilePath, logFileArchivePath);
@@ -257,6 +263,9 @@ void Logger::rollover() {
             if (!copySuccess) {
                 lock_guard(cerr_mutex);
                 cerr << Logger::get_local_time() + string(" ERROR: Logger::rollover() failed to copy the currect log at ") + Logger::log_file_path + " to the archive path " + Logger::log_archive_folder + ". in this case the copy operation itself failed. Check that the file isn't locked by another process/application." << endl;
+
+                lock_guard(log_file_mutex);
+                LogFile << Logger::get_local_time() + string(" ERROR: Logger::rollover() failed to copy the currect log at ") + Logger::log_file_path + " to the archive path " + Logger::log_archive_folder + ". in this case the copy operation itself failed. Check that the file isn't locked by another process/application." << endl;
             }
 
         }

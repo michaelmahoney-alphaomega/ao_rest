@@ -4,7 +4,7 @@ using namespace std;
 
 const string logFilePath = string("main.log");
 const LogLevel logLevel = debug_messages;
-const int rolloverSize = 50000000;
+const int rolloverSize = 50;
 const bool sendToCOut = true;
 const vector<string> incommingData = {
     "123 ERROR: test test_func 0",
@@ -63,6 +63,7 @@ int main() {
     
     Log.flush();
     
+    Log.rollover();
 
     return 0;
 
