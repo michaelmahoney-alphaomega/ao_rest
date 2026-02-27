@@ -60,7 +60,7 @@ class Logger {
             const string file_path,
             const string log_archive_path,
             const int log_level = 2,
-            const int rollover_size = 50000000,
+            const uintmax_t = 50000000,
             const bool send_to_cout = true,
             const vector<string>& supplied_data = {}
         );

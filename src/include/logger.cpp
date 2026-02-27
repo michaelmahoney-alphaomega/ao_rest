@@ -1,10 +1,12 @@
 #include "logger.h"
+#include <mutex>
 using namespace std;
     
 Logger::Logger(
     const string file_path,
+    const string log_archive_path,
     const int log_level,
-    const int rollover_size,
+    const uintmax_t rollover_size,
     const bool sendToCOut,
     const vector<string>& supplied_data
 ){
@@ -108,7 +110,7 @@ void Logger::_log(
     }
 
     logMessage = localTimeString + messageTypeString + prefix + log_message;
-    lock_guard(data_mutex);
+    lock_guard<mutex> lockData(data_mutex);
     Logger::data.push_back(logMessage);
 }
 
@@ -212,12 +214,12 @@ int Logger::flush() {
     vector<string>& dataRef = data;
     int dataLength = dataRef.size();
     
-    lock_guard(log_file_mutex);
+    lock_guard<mutex> lockLogFile(log_file_mutex);
     for (string& logLine : dataRef) {
         LogFile << logLine << "\n";
     }
 
-    lock_guard(data_mutex);
+    lock_guard<mutex> lockData(data_mutex);
     dataRef.clear();
     dataRef.shrink_to_fit();
     LogFile.flush();
@@ -242,7 +244,7 @@ void Logger::rollover() {
     filesystem::path logFileArchivePath(logArchiveName);
 
     if (!filesystem::exists(logFilePath) || !filesystem::is_regular_file(logFilePath)) {
-        lock_guard(cerr_mutex);
+        lock_guard<mutex> lockCErr(cerr_mutex);
         cerr << Logger::get_local_time() + string(" ERROR: Logger::rollover() tried to read the size of -- ") + Logger::log_file_path + " -- and failed. This means the file either does not exist or is not a normal file type." << endl;
     }
     else {
@@ -250,10 +252,10 @@ void Logger::rollover() {
         if (logFileSize > Logger::log_file_rollover_size) {
             
             if (!filesystem::exists(logFileArchivePath) || !filesystem::is_directory(logFileArchivePath)) {
-                lock_guard(cerr_mutex);
+                lock_guard<mutex> lockCErr(cerr_mutex);
                 cerr << Logger::get_local_time() + string(" ERROR: Logger::rollover() failed to copy the current log: ") + Logger::log_file_path + " to the archive folder: " + Logger::log_archive_folder + ", this means either the archive folder doesn't exist or isn't a directory." << endl;
                 
-                lock_guard(log_file_mutex);
+                lock_guard<mutex> lockLogFile(log_file_mutex);
                 Logger::LogFile << Logger::get_local_time() + string(" ERROR: Logger::rollover() failed to copy the current log: ") + Logger::log_file_path + " to the archive folder: " + Logger::log_archive_folder + ", this means either the archive folder doesn't exist or isn't a directory." << endl;
                 
             }
@@ -261,10 +263,10 @@ void Logger::rollover() {
             bool copySuccess = filesystem::copy_file(logFilePath, logFileArchivePath);
             
             if (!copySuccess) {
-                lock_guard(cerr_mutex);
+                lock_guard<mutex> lockCErr(cerr_mutex);
                 cerr << Logger::get_local_time() + string(" ERROR: Logger::rollover() failed to copy the currect log at ") + Logger::log_file_path + " to the archive path " + Logger::log_archive_folder + ". in this case the copy operation itself failed. Check that the file isn't locked by another process/application." << endl;
 
-                lock_guard(log_file_mutex);
+                lock_guard<mutex> lockLogFile(log_file_mutex);
                 LogFile << Logger::get_local_time() + string(" ERROR: Logger::rollover() failed to copy the currect log at ") + Logger::log_file_path + " to the archive path " + Logger::log_archive_folder + ". in this case the copy operation itself failed. Check that the file isn't locked by another process/application." << endl;
             }
 

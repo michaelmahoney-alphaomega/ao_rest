@@ -1,11 +1,13 @@
 #include "logger.h"
 #include <cassert>
+#include <mutex>
+
 using namespace std;
 
 const string logFilePath = string("main.log");
 const string logArchivePath = string("logs/");
 const LogLevel logLevel = debug_messages;
-const int rolloverSize = 50;
+const int rolloverSize = 5000000;
 const bool sendToCOut = true;
 const vector<string> incommingData = {
     "123 ERROR: test test_func 0",
@@ -33,10 +35,10 @@ int main() {
         suppliedData
     );
     
-    cout << string("get_error_count TEST: Log.get_error_count() = ") << Log.get_error_count() << endl;
-    cout << string("get_warning_count TEST: Log.get_warning_count() = ") << Log.get_warning_count() << endl;
-    cout << string("get_info_count TEST: Log.get_info_count() = ") << Log.get_info_count() << endl;
-    cout << string("get_debug_count TEST: Log.get_debug_count() = ") << Log.get_debug_count() << endl;
+    // cout << Log.get_local_time() << string(" get_error_count TEST: Log.get_error_count() = ") << Log.get_error_count() << endl;
+    // cout << Log.get_local_time()<< string(" get_warning_count TEST: Log.get_warning_count() = ") << Log.get_warning_count() << endl;
+    // cout << Log.get_local_time()<< string(" get_info_count TEST: Log.get_info_count() = ") << Log.get_info_count() << endl;
+    // cout << Log.get_local_time()<< string(" get_debug_count TEST: Log.get_debug_count() = ") << Log.get_debug_count() << endl;
     int debugCount = Log.get_debug_count();
     int errorCount= Log.get_error_count();
     int warningCount = Log.get_warning_count();
@@ -51,6 +53,7 @@ int main() {
     string warningMessage = string("This is a test warning message");
     string infoMessage = string("This is a test info message");
     string debugMessage = string("This is a test debug message");
+
     const char *fileName = "./main.cpp";
     const char *funcName= "main()";
     const int line = 69;
@@ -63,7 +66,7 @@ int main() {
     Log.log_fatal(debugMessage, fileName, funcName, line);
     Log.log_unknown(debugMessage, fileName, funcName, line);
     
-    Log.flush();
+    // Log.flush();
     
     Log.rollover();
 

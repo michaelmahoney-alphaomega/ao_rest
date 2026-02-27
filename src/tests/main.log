@@ -59,3 +59,197 @@
 2026-02-07 22:59:00 DEBUG: ./main.cpp main() 69 This is a test debug message
 2026-02-07 22:59:00 FATAL: ./main.cpp main() 69 This is a test debug message
 2026-02-07 22:59:00 UNKNOWN: ./main.cpp main() 69 This is a test debug message
+2026-02-16 08:07:33 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-16 08:07:33 WARNING: ./main.cpp main() 69 This is a test warning message
+2026-02-16 08:07:33 INFO: ./main.cpp main() 69 This is a test info message
+2026-02-16 08:07:33 DEBUG: ./main.cpp main() 69 This is a test debug message
+2026-02-16 08:07:33 FATAL: ./main.cpp main() 69 This is a test debug message
+2026-02-16 08:07:33 UNKNOWN: ./main.cpp main() 69 This is a test debug message
+123 ERROR: test test_func 0
+123 WARNING: test test_func 0
+123 WARNING: test test_func 0
+123 INFO: test test_func 0
+123 INFO: test test_func 0
+123 INFO: test test_func 0
+123 DEBUG: test test_func 0
+123 DEBUG: test test_func 0
+123 DEBUG: test test_func 0
+123 DEBUG: test test_func 0
+123 : test test_func 0
+2026-02-16 08:07:33 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-16 08:07:33 WARNING: ./main.cpp main() 69 This is a test warning message
+2026-02-16 08:07:33 INFO: ./main.cpp main() 69 This is a test info message
+2026-02-16 08:07:33 DEBUG: ./main.cpp main() 69 This is a test debug message
+2026-02-16 08:07:33 FATAL: ./main.cpp main() 69 This is a test debug message
+2026-02-16 08:07:33 UNKNOWN: ./main.cpp main() 69 This is a test debug message
+2026-02-16 08:07:50 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-16 08:07:50 WARNING: ./main.cpp main() 69 This is a test warning message
+2026-02-16 08:07:50 INFO: ./main.cpp main() 69 This is a test info message
+2026-02-16 08:07:50 DEBUG: ./main.cpp main() 69 This is a test debug message
+2026-02-16 08:07:50 FATAL: ./main.cpp main() 69 This is a test debug message
+2026-02-16 08:07:50 UNKNOWN: ./main.cpp main() 69 This is a test debug message
+123 ERROR: test test_func 0
+123 WARNING: test test_func 0
+123 WARNING: test test_func 0
+123 INFO: test test_func 0
+123 INFO: test test_func 0
+123 INFO: test test_func 0
+123 DEBUG: test test_func 0
+123 DEBUG: test test_func 0
+123 DEBUG: test test_func 0
+123 DEBUG: test test_func 0
+123 : test test_func 0
+2026-02-16 08:07:50 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-16 08:07:50 WARNING: ./main.cpp main() 69 This is a test warning message
+2026-02-16 08:07:50 INFO: ./main.cpp main() 69 This is a test info message
+2026-02-16 08:07:50 DEBUG: ./main.cpp main() 69 This is a test debug message
+2026-02-16 08:07:50 FATAL: ./main.cpp main() 69 This is a test debug message
+2026-02-16 08:07:50 UNKNOWN: ./main.cpp main() 69 This is a test debug message
+2026-02-16 08:09:15 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-16 08:09:15 WARNING: ./main.cpp main() 69 This is a test warning message
+2026-02-16 08:09:15 INFO: ./main.cpp main() 69 This is a test info message
+2026-02-16 08:09:15 DEBUG: ./main.cpp main() 69 This is a test debug message
+2026-02-16 08:09:15 FATAL: ./main.cpp main() 69 This is a test debug message
+2026-02-16 08:09:15 UNKNOWN: ./main.cpp main() 69 This is a test debug message
+123 ERROR: test test_func 0
+123 WARNING: test test_func 0
+123 WARNING: test test_func 0
+123 INFO: test test_func 0
+123 INFO: test test_func 0
+123 INFO: test test_func 0
+123 DEBUG: test test_func 0
+123 DEBUG: test test_func 0
+123 DEBUG: test test_func 0
+123 DEBUG: test test_func 0
+123 : test test_func 0
+2026-02-16 08:09:15 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-16 08:09:15 WARNING: ./main.cpp main() 69 This is a test warning message
+2026-02-16 08:09:15 INFO: ./main.cpp main() 69 This is a test info message
+2026-02-16 08:09:15 DEBUG: ./main.cpp main() 69 This is a test debug message
+2026-02-16 08:09:15 FATAL: ./main.cpp main() 69 This is a test debug message
+2026-02-16 08:09:15 UNKNOWN: ./main.cpp main() 69 This is a test debug message
+2026-02-16 08:09:29 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-16 08:09:29 WARNING: ./main.cpp main() 69 This is a test warning message
+2026-02-16 08:09:29 INFO: ./main.cpp main() 69 This is a test info message
+2026-02-16 08:09:29 DEBUG: ./main.cpp main() 69 This is a test debug message
+2026-02-16 08:09:29 FATAL: ./main.cpp main() 69 This is a test debug message
+2026-02-16 08:09:29 UNKNOWN: ./main.cpp main() 69 This is a test debug message
+123 ERROR: test test_func 0
+123 WARNING: test test_func 0
+123 WARNING: test test_func 0
+123 INFO: test test_func 0
+123 INFO: test test_func 0
+123 INFO: test test_func 0
+123 DEBUG: test test_func 0
+123 DEBUG: test test_func 0
+123 DEBUG: test test_func 0
+123 DEBUG: test test_func 0
+123 : test test_func 0
+2026-02-16 08:09:29 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-16 08:09:29 WARNING: ./main.cpp main() 69 This is a test warning message
+2026-02-16 08:09:29 INFO: ./main.cpp main() 69 This is a test info message
+2026-02-16 08:09:29 DEBUG: ./main.cpp main() 69 This is a test debug message
+2026-02-16 08:09:29 FATAL: ./main.cpp main() 69 This is a test debug message
+2026-02-16 08:09:29 UNKNOWN: ./main.cpp main() 69 This is a test debug message
+123 ERROR: test test_func 0
+123 WARNING: test test_func 0
+123 WARNING: test test_func 0
+123 INFO: test test_func 0
+123 INFO: test test_func 0
+123 INFO: test test_func 0
+123 DEBUG: test test_func 0
+123 DEBUG: test test_func 0
+123 DEBUG: test test_func 0
+123 DEBUG: test test_func 0
+123 : test test_func 0
+2026-02-16 08:29:26 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-16 08:29:26 WARNING: ./main.cpp main() 69 This is a test warning message
+2026-02-16 08:29:26 INFO: ./main.cpp main() 69 This is a test info message
+2026-02-16 08:29:26 DEBUG: ./main.cpp main() 69 This is a test debug message
+2026-02-16 08:29:26 FATAL: ./main.cpp main() 69 This is a test debug message
+2026-02-16 08:29:26 UNKNOWN: ./main.cpp main() 69 This is a test debug message
+123 ERROR: test test_func 0
+123 WARNING: test test_func 0
+123 WARNING: test test_func 0
+123 INFO: test test_func 0
+123 INFO: test test_func 0
+123 INFO: test test_func 0
+123 DEBUG: test test_func 0
+123 DEBUG: test test_func 0
+123 DEBUG: test test_func 0
+123 DEBUG: test test_func 0
+123 : test test_func 0
+2026-02-16 08:31:44 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-16 08:31:44 WARNING: ./main.cpp main() 69 This is a test warning message
+2026-02-16 08:31:44 INFO: ./main.cpp main() 69 This is a test info message
+2026-02-16 08:31:44 DEBUG: ./main.cpp main() 69 This is a test debug message
+2026-02-16 08:31:44 FATAL: ./main.cpp main() 69 This is a test debug message
+2026-02-16 08:31:44 UNKNOWN: ./main.cpp main() 69 This is a test debug message
+123 ERROR: test test_func 0
+123 WARNING: test test_func 0
+123 WARNING: test test_func 0
+123 INFO: test test_func 0
+123 INFO: test test_func 0
+123 INFO: test test_func 0
+123 DEBUG: test test_func 0
+123 DEBUG: test test_func 0
+123 DEBUG: test test_func 0
+123 DEBUG: test test_func 0
+123 : test test_func 0
+2026-02-16 08:32:36 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-16 08:32:36 WARNING: ./main.cpp main() 69 This is a test warning message
+2026-02-16 08:32:36 INFO: ./main.cpp main() 69 This is a test info message
+2026-02-16 08:32:36 DEBUG: ./main.cpp main() 69 This is a test debug message
+2026-02-16 08:32:36 FATAL: ./main.cpp main() 69 This is a test debug message
+2026-02-16 08:32:36 UNKNOWN: ./main.cpp main() 69 This is a test debug message
+123 ERROR: test test_func 0
+123 WARNING: test test_func 0
+123 WARNING: test test_func 0
+123 INFO: test test_func 0
+123 INFO: test test_func 0
+123 INFO: test test_func 0
+123 DEBUG: test test_func 0
+123 DEBUG: test test_func 0
+123 DEBUG: test test_func 0
+123 DEBUG: test test_func 0
+123 : test test_func 0
+2026-02-16 08:33:23 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-16 08:33:23 WARNING: ./main.cpp main() 69 This is a test warning message
+2026-02-16 08:33:23 INFO: ./main.cpp main() 69 This is a test info message
+2026-02-16 08:33:23 DEBUG: ./main.cpp main() 69 This is a test debug message
+2026-02-16 08:33:23 FATAL: ./main.cpp main() 69 This is a test debug message
+2026-02-16 08:33:23 UNKNOWN: ./main.cpp main() 69 This is a test debug message
+123 ERROR: test test_func 0
+123 WARNING: test test_func 0
+123 WARNING: test test_func 0
+123 INFO: test test_func 0
+123 INFO: test test_func 0
+123 INFO: test test_func 0
+123 DEBUG: test test_func 0
+123 DEBUG: test test_func 0
+123 DEBUG: test test_func 0
+123 DEBUG: test test_func 0
+123 : test test_func 0
+2026-02-16 08:37:37 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-16 08:37:37 WARNING: ./main.cpp main() 69 This is a test warning message
+2026-02-16 08:37:37 INFO: ./main.cpp main() 69 This is a test info message
+2026-02-16 08:37:37 DEBUG: ./main.cpp main() 69 This is a test debug message
+2026-02-16 08:37:37 FATAL: ./main.cpp main() 69 This is a test debug message
+2026-02-16 08:37:37 UNKNOWN: ./main.cpp main() 69 This is a test debug message
+123 ERROR: test test_func 0
+123 WARNING: test test_func 0
+123 WARNING: test test_func 0
+123 INFO: test test_func 0
+123 INFO: test test_func 0
+123 INFO: test test_func 0
+123 DEBUG: test test_func 0
+123 DEBUG: test test_func 0
+123 DEBUG: test test_func 0
+123 DEBUG: test test_func 0
+123 : test test_func 0
+2026-02-16 08:39:27 ERROR: ./main.cpp main() 69 This is a test error message
+2026-02-16 08:39:27 WARNING: ./main.cpp main() 69 This is a test warning message
+2026-02-16 08:39:27 INFO: ./main.cpp main() 69 This is a test info message
+2026-02-16 08:39:27 DEBUG: ./main.cpp main() 69 This is a test debug message
+2026-02-16 08:39:27 FATAL: ./main.cpp main() 69 This is a test debug message
+2026-02-16 08:39:27 UNKNOWN: ./main.cpp main() 69 This is a test debug message
